@@ -18,6 +18,5 @@ int main() {
         int answer = lower_bound(sorted.begin(), sorted.end(), v[i]) - sorted.begin();
         printf("%d ", answer);
     }
-
     return 0;
 }
