@@ -3,10 +3,6 @@
 #include <vector>
 using namespace std;
 
-int num[1000001];
-int sorted[1000001];
-//int answer[1000001] = { 0,};
-
 int main() {
     int n;
     scanf("%d", &n);
@@ -22,8 +18,6 @@ int main() {
         int answer = lower_bound(sorted.begin(), sorted.end(), v[i]) - sorted.begin();
         printf("%d ", answer);
     }
-
-    //for (int i = 0; i < n; i++) printf("v[%d] = %d, sorted[%d] = %d\n", i, v[i], i, sorted[i]);
 
     return 0;
 }
