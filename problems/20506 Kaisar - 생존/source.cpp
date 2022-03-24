@@ -2,10 +2,12 @@
 #include <vector>
 using namespace std;
 
+typedef long long ll;
 
 int parent[200001];
 vector<int> childs[200001];
 int dp[200001];
+ll lcaCnt[200001];
 
 int dfs(int n);
 
@@ -24,9 +26,30 @@ int main() {
 
     dfs(root);
 
+    ll cnt1 = 0;
+    ll cnt2 = 0;
+
+    int untilCnt = 0;
     for (int i = 1; i <= N; i++) {
-        printf("dp[%d] = %d\n", i, dp[i]);
+        if (lcaCnt[i]%2 == 0) {
+            cnt1 += (ll)(i*(lcaCnt[i]/2));
+            cnt2 += (ll)(i*(lcaCnt[i]/2));
+        }
+        else {
+            if (untilCnt%2 == 0) {
+                cnt1 += (ll)(i*(lcaCnt[i]/2+1));
+                cnt2 += (ll)(i*(lcaCnt[i]/2));
+            }
+            else {
+                cnt1 += (ll)(i*(lcaCnt[i]/2));
+                cnt2 += (ll)(i*(lcaCnt[i]/2+1));
+            }
+        }
+
+        untilCnt += lcaCnt[i];
     }
+
+    cout << cnt2 << " " << cnt1 << endl;
 
     return 0;
 
@@ -34,21 +57,19 @@ int main() {
 
 int dfs(int n) {
     dp[n] = 1;
+    vector<int> v;
+    ll cnt = 1;
+    v.push_back(1);
     for (auto child: childs[n]) {
         dp[n] += dfs(child);
+        v.push_back(dp[child]);
     }
+    
+    for (int i = 0; i < v.size()-1; i++) {
+        for (int j = i+1; j < v.size(); j++) {
+            cnt += 2*v[i]*v[j];
+        }
+    }
+    lcaCnt[n] = cnt;
     return dp[n];
 }
-
-//tree의 한 정점에서 서브트리들의 정점 개수를 저장.
-//dp[12] = 5, dp[2] = 5, dp[7] = 1
-//dp[9] = 12
-//조상이 9인 순서쌍의 개수: 1 + 2(5*5 + 5*1 + 1*5  +  )
-
-
-//조상이 1인 순서쌍의 개수: 1 + 2(3*1 + 1*1 + 1*3) = 1 + 14 => 부모노드, 각각의 서브트리를 각각 하나로 보고 번갈아가면서 곱
-//                          ->투포인터로 합 구하기!
-
-
-
-
