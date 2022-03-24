@@ -29,20 +29,20 @@ int main() {
     ll cnt1 = 0;
     ll cnt2 = 0;
 
-    int untilCnt = 0;
-    for (int i = 1; i <= N; i++) {
+    ll untilCnt = 0;
+    for (ll i = 1; i <= N; i++) {
         if (lcaCnt[i]%2 == 0) {
-            cnt1 += (ll)(i*(lcaCnt[i]/2));
-            cnt2 += (ll)(i*(lcaCnt[i]/2));
+            cnt1 += i*(lcaCnt[i]/2);
+            cnt2 += i*(lcaCnt[i]/2);
         }
         else {
             if (untilCnt%2 == 0) {
-                cnt1 += (ll)(i*(lcaCnt[i]/2+1));
-                cnt2 += (ll)(i*(lcaCnt[i]/2));
+                cnt1 += i*(lcaCnt[i]/2+1);
+                cnt2 += i*(lcaCnt[i]/2);
             }
             else {
-                cnt1 += (ll)(i*(lcaCnt[i]/2));
-                cnt2 += (ll)(i*(lcaCnt[i]/2+1));
+                cnt1 += i*(lcaCnt[i]/2);
+                cnt2 += i*(lcaCnt[i]/2+1);
             }
         }
 
