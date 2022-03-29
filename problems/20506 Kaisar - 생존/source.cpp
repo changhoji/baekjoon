@@ -6,7 +6,7 @@ typedef long long ll;
 
 int parent[200001];
 vector<int> childs[200001];
-int dp[200001];
+ll dp[200001];
 ll lcaCnt[200001];
 
 int dfs(int n);
@@ -57,19 +57,13 @@ int main() {
 
 int dfs(int n) {
     dp[n] = 1;
-    vector<int> v;
-    ll cnt = 1;
-    v.push_back(1);
+    ll cnt = 0;
     for (auto child: childs[n]) {
         dp[n] += dfs(child);
-        v.push_back(dp[child]);
+        cnt -= dp[child]*dp[child];
     }
+    cnt += dp[n]*dp[n];
     
-    for (int i = 0; i < v.size()-1; i++) {
-        for (int j = i+1; j < v.size(); j++) {
-            cnt += 2*v[i]*v[j];
-        }
-    }
     lcaCnt[n] = cnt;
     return dp[n];
 }
