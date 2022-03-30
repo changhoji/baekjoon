@@ -7,7 +7,7 @@ int main() {
     ll n;
     cin >> n;
 
-    n %= 8;
+    n %= 7;
 
     switch (n) {
         case 1: //a:1
@@ -17,7 +17,8 @@ int main() {
         case 6: //a:4 -> b:1 -> a:1
             cout << "SK" << endl;
             break;
-        default:
+        case 0:
+        case 2: //a:1, b:1
             cout << "CY" << endl;
             break;
     }
