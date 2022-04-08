@@ -4,25 +4,21 @@
 #include <cstring>
 using namespace std;
 
-vector<pair<int, int>> edges[100001];
+vector<pair<int, int>> edges[10001];
 
 int main() {
-    int V;
-    cin >> V;
+    int n;
+    cin >> n;
 
-    for (int i = 1; i <= V; i++) {
-        int from, to, cost;
+    for (int i = 0; i < n-1; i++) {
+        int a, b, c;
+        cin >> a >> b >> c;
 
-        cin >> from >> to;
-
-        while (to != -1) {
-            cin >> cost;
-            edges[from].push_back({to, cost});
-            cin >> to;
-        }
+        edges[a].push_back({b, c});
+        edges[b].push_back({a, c});
     }
 
-    int dist[100001];
+    int dist[10001];
 
     memset(dist, -1, sizeof(dist));
 
@@ -41,11 +37,9 @@ int main() {
     }
 
     pair<int, int> max = {0, 0};
-    for (int i = 1; i <= V; i++) {
-        //printf("dist[%d] = %d\n", i, dist[i]);
+    for (int i = 1; i <= n; i++) {
         if (dist[i] > max.second) max = {i, dist[i]};
     }
-    //printf("first: %d\n", max.first);
 
     memset(dist, -1, sizeof(dist));
 
@@ -63,7 +57,7 @@ int main() {
     }
 
     pair<int, int> ans = {0, 0};
-    for (int i = 1; i <= V; i++) {
+    for (int i = 1; i <= n; i++) {
         //printf("dist[%d] = %d\n", i, dist[i]);
         if (dist[i] > ans.second) ans = {i, dist[i]};
     }
