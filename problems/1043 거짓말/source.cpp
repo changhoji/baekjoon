@@ -2,8 +2,7 @@
 #include <vector>
 using namespace std;
 
-bool know[51] = { false,};
-bool isPar[51] = { false,};
+vector<int> know;
 
 int par[51];
 
@@ -15,8 +14,7 @@ int find(int a) {
 void union_(int a, int b) {
     int aa = find(a);
     int bb = find(b);
-    if (aa < bb) par[bb] = aa;
-    else par[aa] = bb;
+    par[aa] = bb;
 }
 
 int main() {
@@ -32,38 +30,47 @@ int main() {
     for (int i = 0; i < knowCnt; i++) {
         int num;
         cin >> num;
-        know[num] = true;
+        know.push_back(num);
     }
+
+    vector<int> participant[50];
 
     for (int i = 0; i < M; i++) {
         int partySize;
         cin >> partySize;
 
-        vector<int> participant;
+        int before;
 
-        bool skip = false;
-        for (int i = 0; i < partySize; i++) {
+        for (int j = 0; j < partySize; j++) {
             int num;
             cin >> num;
-            participant.push_back(num);
-        }
-        if (!skip) {
-            for (int i = 1; i < participant.size(); i++) {
-                union_(participant[0], participant[i]);
-            }
+            participant[i].push_back(num);
+
+            if (j) 
+                union_(before, num);
+                
+            before = num;         
         }
     }
 
-    for (int i = 1; i <= N; i++) {
-        isPar[par[i]] = true;
-    }
     int cnt = 0;
-    for (int i = 1; i <= N; i++) {
-        if (know[i]) continue;
-        if (isPar[i]) cnt++;
+
+    for (int i = 0; i < M; i++) {
+        bool flag = false;
+        for (auto j: participant[i]) {
+            for (auto k: know) {
+                if (find(j) == find(k)) {
+                    flag = true;
+                    break;
+                }
+            }
+            if (flag) break;
+        }
+        //printf("\n");
+        if (!flag) cnt++;
     }
 
-    cout << cnt << endl;
+    cout << cnt << '\n';
 
     return 0;
 }
