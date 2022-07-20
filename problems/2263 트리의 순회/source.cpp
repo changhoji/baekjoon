@@ -6,7 +6,7 @@ int inorder[100001];
 int inIdx[1000001];
 int postorder[100001];
 
-void printPreOrder(int root, int left, int right);
+void printPreOrder(int inLeft, int inRight, int postLeft, int postRight);
 
 int main() {
     int n;
@@ -20,12 +20,7 @@ int main() {
         cin >> postorder[i];
     }
 
-    for (int i = 1; i <= n; i++) {
-        printf("inIdx[%d] = %d\n", i, inIdx[i]);
-    }
-
-    printPreOrder(postorder[n], 1, n);
-
+    printPreOrder(1, n, 1, n);
 
     return 0;
     
@@ -39,17 +34,15 @@ int main() {
        post: 3 5 1 6 7 4 2 
 */
 
-void printPreOrder(int root, int left, int right) {
-    //printf("root = %d, rootIdx = %d, left = %d, right = %d\n", root, inIdx[root], left, right);
-    if (left == right) {
-        printf("%d ", root);
-        return;
-    }
-    int rootIdx = inIdx[root];
-    
-    printf("%d ", root);
-    //if (rootIdx-1 >= left)
-        printPreOrder(postorder[rootIdx-1], left, rootIdx-1);
-    //if (rootIdx+1 <= right)
-        printPreOrder(postorder[right-1], rootIdx+1, right);
+void printPreOrder(int inLeft, int inRight, int postLeft, int postRight) {
+    if (inLeft > inRight || postLeft > postRight) return;
+
+    int rootIdx = inIdx[postorder[postRight]];
+    int a = rootIdx - inLeft;
+    int b = inRight - rootIdx;
+
+    cout << inorder[rootIdx] << " ";
+
+    printPreOrder(inLeft, rootIdx-1, postLeft, postLeft + a - 1);    
+    printPreOrder(rootIdx+1, inRight, postLeft+a, postRight-1);
 }
