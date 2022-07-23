@@ -7,27 +7,36 @@ typedef long long ll;
 class matrix {
 public:
     ll num[2][2] = {{1, 1}, {1, 0}};
+
     matrix operator*(matrix b) {
-        
+        matrix res;
+        res.num[0][0] = ((num[0][0]*b.num[0][0])%MOD + (num[0][1]*b.num[1][0])%MOD)%MOD;
+        res.num[0][1] = ((num[0][0]*b.num[0][1])%MOD + (num[0][1]*b.num[1][1])%MOD)%MOD;
+        res.num[1][0] = res.num[0][1];
+        res.num[1][1] = ((num[1][0]*b.num[0][1])%MOD + (num[1][1]*b.num[1][1])%MOD)%MOD;
+
+        return res;
     }
 };
 
-matrix operator*(matrix a, matrix b) {
-    matrix res;
-    res.num[0][0] = a.num[0][0]*b.num[0][0]%MOD; + a.num[0][1]*b.num[1][0];
-}
+      
+matrix pow(ll x) {
+    matrix temp;
+    if (x == 1) {
+        return temp;
+    }
 
-matrix
+    if (x%2) return temp*pow(--x);
+    matrix half = pow(x/2);
 
-
-
-matrix pow(int x) {
-    
+    return half*half;
 }
 
 int main() {
-    int n;
+    ll n;
     cin >> n;
 
-    
+    cout << pow(n).num[0][1]%MOD << '\n';
+
+    return 0;
 }
