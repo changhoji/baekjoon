@@ -16,7 +16,8 @@ int main() {
     for (int i = 2; i <= N; i++) {
         if (!(i%2)) dp[i] = min(dp[i], dp[i/2]);
         if (!(i%3)) dp[i] = min(dp[i], dp[i/3]);
-        dp[i] = min(dp[i], dp[i-1])+1;
+        dp[i] = min(dp[i], dp[i-1]);
+        dp[i]++;
     }
 
     cout << dp[N]-1 << '\n';
